@@ -1,0 +1,79 @@
+
+
+<div class="d-flex justify-content-end m-2">
+    <button class="btn btn-primary" (click)="generateInvoicePDF('print')"><i class="bi bi-printer-fill"></i> Print
+    </button>&nbsp;
+    <button class="btn btn-primary" (click)="generateInvoicePDF()"><i class="bi bi-arrow-down-circle-fill"></i>
+        Download</button>
+</div>
+
+<!-- invoice.component.html -->
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col">
+            <div class="card">
+
+                <p-card header="Invoice Details">
+                <div class="card-body">
+
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <h6>Order ID: {{ orderDetails.Data.OrderID }}</h6>
+                            <p>Order Date: {{ orderDetails.Data.date | date:'MM/dd/yyyy' }}</p>
+                        </div>
+                        <div class="col-sm-4">
+                            <h6>Bill To:</h6>
+                            <p>{{ orderDetails.Data.Bill }}<br>{{ orderDetails.Data.Address }}</p>
+                        </div>
+                        <div class="col-sm-4">
+                            <h6>Ship To:</h6>
+                            <p>{{ orderDetails.Data.Ship }}<br>{{ orderDetails.Data.Address }}</p>
+                        </div>
+                    </div>
+
+
+                    <table class="table table-bordered">
+                        <thead>
+                          <tr>
+                            <th>Product</th>
+                            <!-- <th>Brand</th> -->
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let item of orderDetails.Data.items">
+                            <!-- <td><img src="{{ item.image }}" alt="{{ item.title }}" width="50"></td> -->
+                            <td>{{item.title }}({{ item.brand }})</td>
+                            <!-- <td>{{ item.brand }}</td> -->
+                            <td>{{ item.price | currency:'INR' }}</td>
+                            <td>{{ item.quantity }}</td>
+                            <td>{{ item.price * item.quantity | currency:'INR' }}</td>
+                          </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td class="text-right"><strong>Shipping Charges:</strong><span class="text-danger"> + {{ orderDetails.Data.Shipping_Charges }}</span></td>
+                                <td class="text-right"><strong>Discount(30%):</strong><span class="text-info"> - ₹{{ orderDetails.Data.Discount }}</span></td>
+                                <td class="text-right"><strong>GST(18%):</strong><span class="text-danger"> + ₹{{ orderDetails.Data.GST }}</span></td>
+                                <!-- <td class="text-right"><strong>Total:</strong><span class="text-primary"> {{ orderDetails.Data.Total }}</span></td> -->
+                                <td class="text-right"><strong class="text-primary">₹{{ orderDetails.Data.Total }}</strong></td>
+                            </tr>
+
+                        </tfoot>
+                      </table>
+                      <div class="row">
+                        <div class="col-sm-4">
+                            <h4>Payment Method: {{ orderDetails.Data.Payment_Method }}</h4>
+                        </div>
+                    </div>
+
+                </div>
+            </p-card>
+            </div>
+        </div>
+    </div>
+</div>
+
